@@ -1,4 +1,4 @@
-name: Commit SBOM to PR Branch
+name: Create and Commit SBOM (signed)
 
 on:
   pull_request:
@@ -8,13 +8,13 @@ on:
       - "sbom/**"
 
 permissions:
-  contents: write
-  pull-requests: write
+  id-token: write         # wymagane przez Gitsign do OIDC (keyless signing)
+  contents: write         # wymagane do commitowania/pushowania
+  pull-requests: write    # opcjonalnie, jeśli chcesz modyfikować PR
 
 jobs:
-  commit-sbom:
+  sbom:
     runs-on: ubuntu-latest
-    # Only run if the PR is from the same repo, not a fork
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     steps:
       - name: Checkout PR branch
@@ -40,23 +40,13 @@ jobs:
           mkdir -p ../sbom
           cyclonedx-py poetry --output-format JSON --output-file ../sbom/hello-world.sbom
 
-      - name: Commit SBOM file to PR branch using GitHub REST API
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILE_TO_COMMIT: sbom/hello-world.sbom
-          DESTINATION_BRANCH: ${{ github.head_ref }}
+      - name: Setup Gitsign for keyless commit signing
+        uses: chainguard-dev/actions/setup-gitsign@main
+
+      - name: Commit and push signed SBOM to PR branch
         run: |
-          CONTENT=$(base64 -w0 $FILE_TO_COMMIT)
-          MESSAGE="chore: add SBOM file"
-          # Get SHA if file already exists
-          SHA=$(gh api repos/${{ github.repository }}/contents/$FILE_TO_COMMIT?ref=$DESTINATION_BRANCH --jq .sha || echo "")
-          PAYLOAD="{\"message\":\"$MESSAGE\",\"content\":\"$CONTENT\",\"branch\":\"$DESTINATION_BRANCH\""
-          if [ -n "$SHA" ]; then
-            PAYLOAD="$PAYLOAD, \"sha\":\"$SHA\""
-          fi
-          PAYLOAD="$PAYLOAD}"
-          gh api \
-            --method PUT \
-            -H "Accept: application/vnd.github+json" \
-            /repos/${{ github.repository }}/contents/$FILE_TO_COMMIT \
-            --input <(echo $PAYLOAD)
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sbom/hello-world.sbom
+          git commit -S -m "chore: add signed SBOM"
+          git push
