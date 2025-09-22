@@ -18,7 +18,7 @@ jobs:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
 
     steps:
-      - name: Checkout PR branch
+      - name: Checkout PR branch (base for the PR we will open)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -41,23 +41,16 @@ jobs:
           mkdir -p ../sbom
           cyclonedx-py poetry --output-format JSON --output-file ../sbom/hello-world.sbom
 
-      - name: Setup Gitsign for keyless commit signing
-        uses: chainguard-dev/actions/setup-gitsign@main
-
-      - name: Commit SBOM file
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add sbom/hello-world.sbom
-          git commit -S -m "chore: add signed SBOM" || echo "No changes to commit"
-
-      - name: Create or update Pull Request with SBOM
-        uses: peter-evans/create-pull-request@v6
+      - name: Create or update Pull Request with SBOM (signed commit)
+        uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # create the PR FROM a new branch TO the current PR head branch
+          branch: "sbom/update-${{ github.head_ref }}"
+          base: ${{ github.head_ref }}
+          add-paths: |
+            sbom/hello-world.sbom
           commit-message: "chore: add signed SBOM"
           title: "chore: add signed SBOM"
           body: "This PR adds or updates the signed SBOM file."
-          branch: "sbom/update-${{ github.head_ref }}"
-          base: ${{ github.head_ref }}
+          sign-commits: true
           merge-method: squash
