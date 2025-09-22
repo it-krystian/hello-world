@@ -53,4 +53,3 @@ jobs:
           title: "chore: add signed SBOM"
           body: "This PR adds or updates the signed SBOM file."
           sign-commits: true
-          merge-method: squash
