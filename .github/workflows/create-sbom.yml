@@ -1,0 +1,83 @@
+name: Create SBOM
+
+on:
+  pull_request:
+    paths:
+      - "hello-world/pyproject.toml"
+      - "hello-world/poetry.lock"
+      - "sbom/**"
+
+permissions:
+  contents: write          # required to commit/push changes
+  pull-requests: write     # required to create/update pull requests
+
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+    # Skip if the PR comes from a fork (cannot push back to forked branches)
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}  # always check out the PR branch
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+          cache: "pip"
+
+      - name: Install CycloneDX 7.x
+        run: |
+          python -m pip install --upgrade pip
+          pip install "cyclonedx-bom==7.*"
+
+      - name: Generate SBOM (CycloneDX JSON from Poetry project)
+        working-directory: ./hello-world
+        run: |
+          mkdir -p ../sbom
+          cyclonedx-py poetry --output-format JSON --output-file ../sbom/hello-world.sbom
+
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom/hello-world.sbom
+          if-no-files-found: error
+          retention-days: 14
+
+      # Generate GitHub App token for signed commits
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      # Build committer string for the GitHub App bot
+      - name: Build committer string for GitHub App
+        id: committer
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          APP_SLUG="${{ steps.app-token.outputs.app-slug }}"
+          USER_ID=$(gh api "/users/${APP_SLUG}[bot]" --jq .id)
+          echo "string=${APP_SLUG}[bot] <${USER_ID}+${APP_SLUG}[bot]@users.noreply.github.com>" >> "$GITHUB_OUTPUT"
+
+      - name: Create / Update PR with signed commit
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          branch: ${{ github.head_ref }}  # commit directly to the PR branch
+          commit-message: "chore(sbom): update hello-world SBOM"
+          title: "chore(sbom): update hello-world SBOM"
+          body: "Auto-generated SBOM update."
+          add-paths: |
+            sbom/hello-world.sbom
+          sign-commits: true
+          committer: ${{ steps.committer.outputs.string }}
+          author: ${{ steps.committer.outputs.string }}
+          delete-branch: false
