@@ -1,14 +1,16 @@
-name: Generate and Commit SBOM to PR Branch
+name: Generate and Commit Signed SBOM with PR
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened] 
     paths:
       - "hello-world/pyproject.toml"
       - "hello-world/poetry.lock"
 
 permissions:
+  id-token: write
   contents: write
+  pull-requests: write
 
 jobs:
   sbom:
@@ -16,7 +18,7 @@ jobs:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
 
     steps:
-      - name: Checkout PR branch
+      - name: Checkout PR branch (base for the PR we will open)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -39,9 +41,14 @@ jobs:
           mkdir -p ../sbom
           cyclonedx-py poetry --output-format JSON --output-file ../sbom/hello-world.sbom
 
-      - name: Commit SBOM to PR branch
-        uses: stefanzweifel/git-auto-commit-action@v6
+      - name: Create or update Pull Request with SBOM (signed commit)
+        uses: peter-evans/create-pull-request@v7
         with:
-          file_pattern: sbom/hello-world.sbom
-          commit_message: "chore: add SBOM"
-          branch: ${{ github.head_ref }}
+          branch: "sbom/update-${{ github.head_ref }}"
+          base: ${{ github.head_ref }}
+          add-paths: |
+            sbom/hello-world.sbom
+          commit-message: "chore: add signed SBOM"
+          title: "chore: add signed SBOM"
+          body: "This PR adds or updates the signed SBOM file."
+          sign-commits: true
