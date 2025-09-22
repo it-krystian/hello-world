@@ -44,7 +44,6 @@ jobs:
       - name: Create or update Pull Request with SBOM (signed commit)
         uses: peter-evans/create-pull-request@v7
         with:
-          # create the PR FROM a new branch TO the current PR head branch
           branch: "sbom/update-${{ github.head_ref }}"
           base: ${{ github.head_ref }}
           add-paths: |
