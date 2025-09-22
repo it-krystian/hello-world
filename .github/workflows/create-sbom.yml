@@ -1,4 +1,4 @@
-name: Create and Commit SBOM (signed)
+name: Generate and Commit Signed SBOM with PR
 
 on:
   pull_request:
@@ -8,14 +8,15 @@ on:
       - "sbom/**"
 
 permissions:
-  id-token: write         # wymagane przez Gitsign do OIDC (keyless signing)
-  contents: write         # wymagane do commitowania/pushowania
-  pull-requests: write    # opcjonalnie, jeśli chcesz modyfikować PR
+  id-token: write
+  contents: write
+  pull-requests: write
 
 jobs:
   sbom:
     runs-on: ubuntu-latest
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@v4
@@ -43,10 +44,20 @@ jobs:
       - name: Setup Gitsign for keyless commit signing
         uses: chainguard-dev/actions/setup-gitsign@main
 
-      - name: Commit and push signed SBOM to PR branch
+      - name: Commit SBOM file
         run: |
           git config user.name "GitHub Actions"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add sbom/hello-world.sbom
-          git commit -S -m "chore: add signed SBOM"
-          git push
+          git commit -S -m "chore: add signed SBOM" || echo "No changes to commit"
+
+      - name: Create or update Pull Request with SBOM
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: chore: add signed SBOM
+          title: "chore: add signed SBOM"
+          body: "This PR adds or updates the signed SBOM file."
+          branch: "sbom/update-${{ github.head_ref }}"
+          base: ${{ github.head_ref }}
+          merge-method: squash
