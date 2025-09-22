@@ -5,7 +5,6 @@ on:
     paths:
       - "hello-world/pyproject.toml"
       - "hello-world/poetry.lock"
-      - "sbom/**"
 
 permissions:
   id-token: write
