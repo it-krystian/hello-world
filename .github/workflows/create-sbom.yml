@@ -55,7 +55,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: chore: add signed SBOM
+          commit-message: "chore: add signed SBOM"
           title: "chore: add signed SBOM"
           body: "This PR adds or updates the signed SBOM file."
           branch: "sbom/update-${{ github.head_ref }}"
