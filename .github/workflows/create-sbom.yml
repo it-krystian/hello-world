@@ -1,4 +1,4 @@
-name: Generate and Commit Signed SBOM with PR
+name: Generate and Commit Signed SBOM
 
 on:
   pull_request:
@@ -8,19 +8,16 @@ on:
       - "hello-world/poetry.lock"
 
 permissions:
-  id-token: write          # needed for keyless signing/attestations
-  attestations: write      # needed by actions/attest-sbom
   contents: write
   pull-requests: write
 
 jobs:
   sbom:
     runs-on: ubuntu-latest
-    # only on same-repo PRs (avoid forks)
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
 
     steps:
-      - name: Checkout PR branch (base for the PR we will open)
+      - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -41,29 +38,17 @@ jobs:
         working-directory: ./hello-world
         run: |
           mkdir -p ../sbom
-          # deterministic output & explicit JSON format
           cyclonedx-py poetry \
             --output-reproducible \
             --output-format JSON \
             --output-file ../sbom/hello-world.json
 
-      - name: Create or update Pull Request with SBOM (signed commit)
-        id: cpr
+      - name: Commit SBOM directly to PR branch
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: "sbom/update-${{ github.head_ref }}"
-          base: ${{ github.head_ref }}
+          branch: ${{ github.head_ref }}  
+          base:   ${{ github.base_ref }}  
           add-paths: |
             sbom/hello-world.json
           commit-message: "chore: add signed SBOM"
-          title: "chore: add signed SBOM"
-          body: "Adds/updates the CycloneDX SBOM. A Sigstore attestation for this SBOM was also created via GitHub Attestations."
           sign-commits: true
-
-      - name: Enable auto-merge
-        if: steps.cpr.outputs.pull-request-number != ''
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
