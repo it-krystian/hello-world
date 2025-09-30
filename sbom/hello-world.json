@@ -1,0 +1,582 @@
+{
+  "components": [
+    {
+      "bom-ref": "atomicwrites@1.4.1",
+      "description": "Atomic file writes.",
+      "name": "atomicwrites",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/atomicwrites@1.4.1",
+      "type": "library",
+      "version": "1.4.1"
+    },
+    {
+      "bom-ref": "attrs@25.3.0",
+      "description": "Classes Without Boilerplate",
+      "name": "attrs",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/attrs@25.3.0",
+      "type": "library",
+      "version": "25.3.0"
+    },
+    {
+      "bom-ref": "black@22.12.0",
+      "description": "The uncompromising code formatter.",
+      "name": "black",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/black@22.12.0",
+      "type": "library",
+      "version": "22.12.0"
+    },
+    {
+      "bom-ref": "click@8.3.0",
+      "description": "Composable command line interface toolkit",
+      "name": "click",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/click@8.3.0",
+      "type": "library",
+      "version": "8.3.0"
+    },
+    {
+      "bom-ref": "colorama@0.4.6",
+      "description": "Cross-platform colored terminal text.",
+      "name": "colorama",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/colorama@0.4.6",
+      "type": "library",
+      "version": "0.4.6"
+    },
+    {
+      "bom-ref": "coverage@7.10.7",
+      "description": "Code coverage measurement for Python",
+      "name": "coverage",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        },
+        {
+          "name": "cdx:python:package:required-extra",
+          "value": "toml"
+        }
+      ],
+      "purl": "pkg:pypi/coverage@7.10.7",
+      "type": "library",
+      "version": "7.10.7"
+    },
+    {
+      "bom-ref": "flake8@3.9.2",
+      "description": "the modular source code checker: pep8 pyflakes and co",
+      "name": "flake8",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/flake8@3.9.2",
+      "type": "library",
+      "version": "3.9.2"
+    },
+    {
+      "bom-ref": "mccabe@0.6.1",
+      "description": "McCabe checker, plugin for flake8",
+      "name": "mccabe",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/mccabe@0.6.1",
+      "type": "library",
+      "version": "0.6.1"
+    },
+    {
+      "bom-ref": "more-itertools@10.8.0",
+      "description": "More routines for operating on iterables, beyond itertools",
+      "name": "more-itertools",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/more-itertools@10.8.0",
+      "type": "library",
+      "version": "10.8.0"
+    },
+    {
+      "bom-ref": "mypy@0.910",
+      "description": "Optional static typing for Python",
+      "name": "mypy",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/mypy@0.910",
+      "type": "library",
+      "version": "0.910"
+    },
+    {
+      "bom-ref": "mypy-extensions@0.4.4",
+      "description": "Experimental type system extensions for programs checked with the mypy typechecker.",
+      "name": "mypy-extensions",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/mypy-extensions@0.4.4",
+      "type": "library",
+      "version": "0.4.4"
+    },
+    {
+      "bom-ref": "packaging@25.0",
+      "description": "Core utilities for Python packages",
+      "name": "packaging",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/packaging@25.0",
+      "type": "library",
+      "version": "25.0"
+    },
+    {
+      "bom-ref": "pathspec@0.12.1",
+      "description": "Utility library for gitignore style pattern matching of file paths.",
+      "name": "pathspec",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/pathspec@0.12.1",
+      "type": "library",
+      "version": "0.12.1"
+    },
+    {
+      "bom-ref": "platformdirs@4.4.0",
+      "description": "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`.",
+      "name": "platformdirs",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/platformdirs@4.4.0",
+      "type": "library",
+      "version": "4.4.0"
+    },
+    {
+      "bom-ref": "pluggy@0.13.1",
+      "description": "plugin and hook calling mechanisms for python",
+      "name": "pluggy",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/pluggy@0.13.1",
+      "type": "library",
+      "version": "0.13.1"
+    },
+    {
+      "bom-ref": "py@1.11.0",
+      "description": "library with cross-python path, ini-parsing, io, code, log facilities",
+      "name": "py",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/py@1.11.0",
+      "type": "library",
+      "version": "1.11.0"
+    },
+    {
+      "bom-ref": "pycodestyle@2.7.0",
+      "description": "Python style guide checker",
+      "name": "pycodestyle",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/pycodestyle@2.7.0",
+      "type": "library",
+      "version": "2.7.0"
+    },
+    {
+      "bom-ref": "pyflakes@2.3.1",
+      "description": "passive checker of Python programs",
+      "name": "pyflakes",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/pyflakes@2.3.1",
+      "type": "library",
+      "version": "2.3.1"
+    },
+    {
+      "bom-ref": "pytest@5.4.3",
+      "description": "pytest: simple powerful testing with Python",
+      "name": "pytest",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/pytest@5.4.3",
+      "type": "library",
+      "version": "5.4.3"
+    },
+    {
+      "bom-ref": "pytest-cov@3.0.0",
+      "description": "Pytest plugin for measuring coverage.",
+      "name": "pytest-cov",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/pytest-cov@3.0.0",
+      "type": "library",
+      "version": "3.0.0"
+    },
+    {
+      "bom-ref": "toml@0.10.2",
+      "description": "Python Library for Tom's Obvious, Minimal Language",
+      "name": "toml",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/toml@0.10.2",
+      "type": "library",
+      "version": "0.10.2"
+    },
+    {
+      "bom-ref": "tomli@2.2.1",
+      "description": "A lil' TOML parser",
+      "name": "tomli",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/tomli@2.2.1",
+      "type": "library",
+      "version": "2.2.1"
+    },
+    {
+      "bom-ref": "typing-extensions@4.15.0",
+      "description": "Backported and Experimental Type Hints for Python 3.9+",
+      "name": "typing-extensions",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/typing-extensions@4.15.0",
+      "type": "library",
+      "version": "4.15.0"
+    },
+    {
+      "bom-ref": "wcwidth@0.2.13",
+      "description": "Measures the displayed width of unicode strings in a terminal",
+      "name": "wcwidth",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/wcwidth@0.2.13",
+      "type": "library",
+      "version": "0.2.13"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "atomicwrites@1.4.1"
+    },
+    {
+      "ref": "attrs@25.3.0"
+    },
+    {
+      "dependsOn": [
+        "click@8.3.0",
+        "mypy-extensions@0.4.4",
+        "pathspec@0.12.1",
+        "platformdirs@4.4.0",
+        "tomli@2.2.1"
+      ],
+      "ref": "black@22.12.0"
+    },
+    {
+      "dependsOn": [
+        "colorama@0.4.6"
+      ],
+      "ref": "click@8.3.0"
+    },
+    {
+      "ref": "colorama@0.4.6"
+    },
+    {
+      "dependsOn": [
+        "tomli@2.2.1"
+      ],
+      "ref": "coverage@7.10.7"
+    },
+    {
+      "dependsOn": [
+        "mccabe@0.6.1",
+        "pycodestyle@2.7.0",
+        "pyflakes@2.3.1"
+      ],
+      "ref": "flake8@3.9.2"
+    },
+    {
+      "dependsOn": [
+        "black@22.12.0",
+        "flake8@3.9.2",
+        "mypy@0.910",
+        "pytest-cov@3.0.0",
+        "pytest@5.4.3"
+      ],
+      "ref": "hello-world"
+    },
+    {
+      "ref": "mccabe@0.6.1"
+    },
+    {
+      "ref": "more-itertools@10.8.0"
+    },
+    {
+      "ref": "mypy-extensions@0.4.4"
+    },
+    {
+      "dependsOn": [
+        "mypy-extensions@0.4.4",
+        "toml@0.10.2",
+        "typing-extensions@4.15.0"
+      ],
+      "ref": "mypy@0.910"
+    },
+    {
+      "ref": "packaging@25.0"
+    },
+    {
+      "ref": "pathspec@0.12.1"
+    },
+    {
+      "ref": "platformdirs@4.4.0"
+    },
+    {
+      "ref": "pluggy@0.13.1"
+    },
+    {
+      "ref": "py@1.11.0"
+    },
+    {
+      "ref": "pycodestyle@2.7.0"
+    },
+    {
+      "ref": "pyflakes@2.3.1"
+    },
+    {
+      "dependsOn": [
+        "coverage@7.10.7",
+        "pytest@5.4.3"
+      ],
+      "ref": "pytest-cov@3.0.0"
+    },
+    {
+      "dependsOn": [
+        "atomicwrites@1.4.1",
+        "attrs@25.3.0",
+        "colorama@0.4.6",
+        "more-itertools@10.8.0",
+        "packaging@25.0",
+        "pluggy@0.13.1",
+        "py@1.11.0",
+        "wcwidth@0.2.13"
+      ],
+      "ref": "pytest@5.4.3"
+    },
+    {
+      "ref": "toml@0.10.2"
+    },
+    {
+      "ref": "tomli@2.2.1"
+    },
+    {
+      "ref": "typing-extensions@4.15.0"
+    },
+    {
+      "ref": "wcwidth@0.2.13"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "bom-ref": "hello-world",
+      "description": "",
+      "name": "hello-world",
+      "type": "application",
+      "version": "0.2.0"
+    },
+    "timestamp": "2025-09-30T13:15:40.170681+00:00",
+    "tools": {
+      "components": [
+        {
+          "description": "CycloneDX Software Bill of Materials (SBOM) generator for Python projects and environments",
+          "externalReferences": [
+            {
+              "type": "build-system",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/actions"
+            },
+            {
+              "type": "distribution",
+              "url": "https://pypi.org/project/cyclonedx-bom/"
+            },
+            {
+              "type": "documentation",
+              "url": "https://cyclonedx-bom-tool.readthedocs.io/"
+            },
+            {
+              "type": "issue-tracker",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/issues"
+            },
+            {
+              "type": "license",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/blob/main/LICENSE"
+            },
+            {
+              "type": "release-notes",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/blob/main/CHANGELOG.md"
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/"
+            },
+            {
+              "type": "website",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/#readme"
+            }
+          ],
+          "group": "CycloneDX",
+          "licenses": [
+            {
+              "license": {
+                "acknowledgement": "declared",
+                "id": "Apache-2.0"
+              }
+            }
+          ],
+          "name": "cyclonedx-py",
+          "type": "application",
+          "version": "7.1.0"
+        },
+        {
+          "description": "Python library for CycloneDX",
+          "externalReferences": [
+            {
+              "type": "build-system",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/actions"
+            },
+            {
+              "type": "distribution",
+              "url": "https://pypi.org/project/cyclonedx-python-lib/"
+            },
+            {
+              "type": "documentation",
+              "url": "https://cyclonedx-python-library.readthedocs.io/"
+            },
+            {
+              "type": "issue-tracker",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/issues"
+            },
+            {
+              "type": "license",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/LICENSE"
+            },
+            {
+              "type": "release-notes",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/CHANGELOG.md"
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib"
+            },
+            {
+              "type": "website",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/#readme"
+            }
+          ],
+          "group": "CycloneDX",
+          "licenses": [
+            {
+              "license": {
+                "acknowledgement": "declared",
+                "id": "Apache-2.0"
+              }
+            }
+          ],
+          "name": "cyclonedx-python-lib",
+          "type": "library",
+          "version": "11.1.0"
+        }
+      ]
+    }
+  },
+  "serialNumber": "urn:uuid:b7a65e35-8ae5-4586-a97c-eed154ae78e7",
+  "version": 1,
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6"
+}
