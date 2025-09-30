@@ -470,7 +470,7 @@
       "type": "application",
       "version": "0.2.0"
     },
-    "timestamp": "2025-09-30T13:15:40.170681+00:00",
+    "timestamp": "2025-09-30T13:16:49.403645+00:00",
     "tools": {
       "components": [
         {
@@ -574,7 +574,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:b7a65e35-8ae5-4586-a97c-eed154ae78e7",
+  "serialNumber": "urn:uuid:7c2e48af-e9d0-4e6f-978d-adc63f1cde37",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
