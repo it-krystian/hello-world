@@ -2,19 +2,21 @@ name: Generate and Commit Signed SBOM with PR
 
 on:
   pull_request:
-    types: [opened, reopened] 
+    types: [opened, reopened]
     paths:
       - "hello-world/pyproject.toml"
       - "hello-world/poetry.lock"
 
 permissions:
-  id-token: write
+  id-token: write          # needed for keyless signing/attestations
+  attestations: write      # needed by actions/attest-sbom
   contents: write
   pull-requests: write
 
 jobs:
   sbom:
     runs-on: ubuntu-latest
+    # only on same-repo PRs (avoid forks)
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
 
     steps:
@@ -39,7 +41,19 @@ jobs:
         working-directory: ./hello-world
         run: |
           mkdir -p ../sbom
-          cyclonedx-py poetry --output-format JSON --output-file ../sbom/hello-world.sbom
+          # deterministic output & explicit JSON format
+          cyclonedx-py poetry \
+            --output-reproducible \
+            --output-format JSON \
+            --output-file ../sbom/hello-world.json
+
+      - name: Attest SBOM (Sigstore / GitHub Attestations)
+        uses: actions/attest-sbom@v1
+        with:
+          # The "thing" the SBOM describes. Using the lockfile is common for lib apps.
+          subject-path: hello-world/poetry.lock
+          sbom-path: sbom/hello-world.cdx.json
+          predicate-type: cyclonedx
 
       - name: Create or update Pull Request with SBOM (signed commit)
         uses: peter-evans/create-pull-request@v7
@@ -47,8 +61,8 @@ jobs:
           branch: "sbom/update-${{ github.head_ref }}"
           base: ${{ github.head_ref }}
           add-paths: |
-            sbom/hello-world.sbom
+            sbom/hello-world.json
           commit-message: "chore: add signed SBOM"
           title: "chore: add signed SBOM"
-          body: "This PR adds or updates the signed SBOM file."
+          body: "Adds/updates the CycloneDX SBOM. A Sigstore attestation for this SBOM was also created via GitHub Attestations."
           sign-commits: true
