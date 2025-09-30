@@ -47,14 +47,6 @@ jobs:
             --output-format JSON \
             --output-file ../sbom/hello-world.json
 
-      - name: Attest SBOM (Sigstore / GitHub Attestations)
-        uses: actions/attest-sbom@v1
-        with:
-          # The "thing" the SBOM describes. Using the lockfile is common for lib apps.
-          subject-path: hello-world/poetry.lock
-          sbom-path: sbom/hello-world.json
-          predicate-type: cyclonedx
-
       - name: Create or update Pull Request with SBOM (signed commit)
         uses: peter-evans/create-pull-request@v7
         with:
@@ -66,3 +58,11 @@ jobs:
           title: "chore: add signed SBOM"
           body: "Adds/updates the CycloneDX SBOM. A Sigstore attestation for this SBOM was also created via GitHub Attestations."
           sign-commits: true
+
+      - name: Enable auto-merge
+        if: steps.cpr.outputs.pull-request-number != ''
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
