@@ -39,15 +39,42 @@ jobs:
         run: |
           mkdir -p ../sbom
           cyclonedx-py poetry \
-            --output-reproducible \
             --output-format JSON \
             --output-file ../sbom/hello-world.json
-            
-      - name: Commit SBOM directly to PR branch
-        uses: stefanzweifel/git-auto-commit-action@v6
+
+      # ✅ Commit SBOM directly to the PR head branch using GitHub REST API
+      - name: Upload SBOM via REST (GitHub-signed commit)
+        uses: actions/github-script@v7
         with:
-          commit_message: "chore: add SBOM"
-          file_pattern: sbom/hello-world.json
-          branch: ${{ github.head_ref }}
-          commit_user_name: github-actions[bot]
-          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          script: |
+            const fs = require('fs');
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const branch = context.payload.pull_request.head.ref;
+            const filePath = 'sbom/hello-world.json';
+
+            // Read file and base64-encode
+            const content = fs.readFileSync(filePath);
+            const b64 = content.toString('base64');
+
+            // Get existing file SHA (if file already exists on branch)
+            let sha = undefined;
+            try {
+              const res = await github.rest.repos.getContent({
+                owner, repo, path: filePath, ref: branch
+              });
+              if (!Array.isArray(res.data)) sha = res.data.sha;
+            } catch (e) {
+              if (e.status !== 404) throw e; // ignore if file doesn't exist yet
+            }
+
+            // Create or update the file (commit signed by GitHub App)
+            await github.rest.repos.createOrUpdateFileContents({
+              owner,
+              repo,
+              path: filePath,
+              message: "chore: add signed SBOM",
+              content: b64,
+              branch,
+              sha
+            });
