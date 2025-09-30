@@ -42,13 +42,12 @@ jobs:
             --output-reproducible \
             --output-format JSON \
             --output-file ../sbom/hello-world.json
-
+            
       - name: Commit SBOM directly to PR branch
-        uses: peter-evans/create-pull-request@v7
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
-          branch: ${{ github.head_ref }}  
-          base:   ${{ github.head_ref }}  
-          add-paths: |
-            sbom/hello-world.json
-          commit-message: "chore: add signed SBOM"
-          sign-commits: true
+          commit_message: "chore: add SBOM"
+          file_pattern: sbom/hello-world.json
+          branch: ${{ github.head_ref }}
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
