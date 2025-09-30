@@ -47,7 +47,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           branch: ${{ github.head_ref }}  
-          base:   ${{ github.base_ref }}  
+          base:   ${{ github.head_ref }}  
           add-paths: |
             sbom/hello-world.json
           commit-message: "chore: add signed SBOM"
