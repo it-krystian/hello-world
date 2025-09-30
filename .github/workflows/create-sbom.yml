@@ -2,7 +2,7 @@ name: Generate and Commit Signed SBOM with PR
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, synchronize, reopened]
     paths:
       - "hello-world/pyproject.toml"
       - "hello-world/poetry.lock"
