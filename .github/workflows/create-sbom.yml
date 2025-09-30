@@ -52,7 +52,7 @@ jobs:
         with:
           # The "thing" the SBOM describes. Using the lockfile is common for lib apps.
           subject-path: hello-world/poetry.lock
-          sbom-path: sbom/hello-world.cdx.json
+          sbom-path: sbom/hello-world.json
           predicate-type: cyclonedx
 
       - name: Create or update Pull Request with SBOM (signed commit)
