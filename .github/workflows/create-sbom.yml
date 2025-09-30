@@ -48,6 +48,7 @@ jobs:
             --output-file ../sbom/hello-world.json
 
       - name: Create or update Pull Request with SBOM (signed commit)
+        id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
           branch: "sbom/update-${{ github.head_ref }}"
