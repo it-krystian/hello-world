@@ -42,9 +42,40 @@ jobs:
             --output-format JSON \
             --output-file ../sbom/hello-world.json
 
-      - name: Commit SBOM to PR branch
-        run: |
-          git add sbom/hello-world.json
-          git config user.name "github-actions[bot]"
-          git commit -m "chore(sbom): update hello-world SBOM" || echo "No changes to commit"
-          git push origin HEAD:${{ github.head_ref }}
+      - name: Commit SBOM to PR branch (Verified via GitHub API)
+        uses: actions/github-script@v7
+        env:
+          FILE_PATH: sbom/hello-world.json
+        with:
+          script: |
+            const fs = require('fs');
+            const path = process.env.FILE_PATH;
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const branch = context.payload.pull_request.head.ref;
+
+            // Read file and base64-encode for API
+            const content = fs.readFileSync(path, { encoding: 'base64' });
+
+            // Try to get existing file SHA (needed only for updates)
+            let sha;
+            try {
+              const { data } = await github.repos.getContent({
+                owner, repo, path, ref: branch
+              });
+              if (!Array.isArray(data)) sha = data.sha;
+            } catch (e) {
+              // File doesn't exist yet on this branch — that's fine.
+            }
+
+            // Create or update the file on the PR head branch
+            await github.repos.createOrUpdateFileContents({
+              owner,
+              repo,
+              path,
+              message: 'chore(sbom): update hello-world SBOM',
+              content,
+              branch,
+              sha
+            });
