@@ -375,21 +375,21 @@
     },
     {
       "dependsOn": [
-        "mccabe@0.6.1",
-        "pycodestyle@2.7.0",
-        "pyflakes@2.3.1"
-      ],
-      "ref": "flake8@3.9.2"
-    },
-    {
-      "dependsOn": [
         "black@22.12.0",
         "flake8@3.9.2",
         "mypy@0.910",
         "pytest-cov@3.0.0",
         "pytest@5.4.3"
       ],
-      "ref": "hello-world"
+      "ref": "end-world"
+    },
+    {
+      "dependsOn": [
+        "mccabe@0.6.1",
+        "pycodestyle@2.7.0",
+        "pyflakes@2.3.1"
+      ],
+      "ref": "flake8@3.9.2"
     },
     {
       "ref": "mccabe@0.6.1"
@@ -464,13 +464,13 @@
   ],
   "metadata": {
     "component": {
-      "bom-ref": "hello-world",
+      "bom-ref": "end-world",
       "description": "",
-      "name": "hello-world",
+      "name": "end-world",
       "type": "application",
       "version": "0.4.0"
     },
-    "timestamp": "2025-10-01T13:52:39.447783+00:00",
+    "timestamp": "2025-10-01T13:52:41.208758+00:00",
     "tools": {
       "components": [
         {
@@ -574,7 +574,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:a60a8c8f-f65a-40bf-9304-5dd929832c40",
+  "serialNumber": "urn:uuid:6075349c-f436-471e-9cce-13431e453770",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
