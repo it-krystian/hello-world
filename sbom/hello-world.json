@@ -468,9 +468,9 @@
       "description": "",
       "name": "hello-world",
       "type": "application",
-      "version": "0.4.0"
+      "version": "0.4.1"
     },
-    "timestamp": "2025-10-01T13:18:52.922328+00:00",
+    "timestamp": "2025-10-01T13:28:33.565238+00:00",
     "tools": {
       "components": [
         {
@@ -574,7 +574,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:176d9a2e-a54f-4fd1-b930-e018a571086f",
+  "serialNumber": "urn:uuid:c692aa51-50bb-4dc4-906d-c5168c9d5981",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
