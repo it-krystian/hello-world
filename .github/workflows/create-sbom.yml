@@ -36,11 +36,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install "cyclonedx-bom==7.*"
 
-      - name: Generate SBOMs
+      - name: Generate SBOM (CycloneDX JSON from Poetry project)
+        working-directory: ./hello-world
         run: |
-          mkdir -p sbom
-          cyclonedx-py -o sbom/hello-world.json -f JSON poetry --project-dir hello-world
-          cyclonedx-py -o sbom/end-world.json   -f JSON poetry --project-dir end-world
+          mkdir -p ../sbom
+          cyclonedx-py poetry \
+            --output-format JSON \
+            --output-file ../sbom/hello-world.json
+            
+      - name: Generate SBOM (CycloneDX JSON from Poetry project)
+        working-directory: ./end-world
+        run: |
+          mkdir -p ../sbom
+          cyclonedx-py poetry \
+            --output-format JSON \
+            --output-file ../sbom/end-world.json
 
       - name: Commit SBOMs to PR branch (Verified via GitHub API)
         uses: actions/github-script@v7
